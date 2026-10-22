@@ -343,6 +343,38 @@ dl.gloss dd{margin:2px 0 0}
 .wq{border-top:2px solid var(--line);padding-top:14px}
 .wq .fb{min-height:1.2em}
 .wnav{display:flex;justify-content:flex-end}
+/* Rundgang: Teile + Lexikon-Links */
+.tour-parts{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tour-parts>span{font-size:14px;font-weight:700;color:var(--muted)}
+.pchip{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-weight:700;font-size:15px}
+.pchip.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.pchip.back{border-style:dashed}
+.lex{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.lex>span{font-size:14px;color:var(--muted);font-weight:700}
+.lex a{display:inline-flex;gap:6px;align-items:center;text-decoration:none;color:var(--ink);border:2px solid var(--line);background:var(--surface2);border-radius:10px;padding:5px 10px;font-size:15px}
+.lex a b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:12px;font-family:Georgia,serif}
+.lex a.kx b{background:var(--orange);color:#fff;font-family:var(--body)}
+.lex a small{color:var(--muted)}
+.lex a:hover{border-color:var(--orange)}
+.station-info figure.nophoto{aspect-ratio:4/3;border-radius:10px;border:2px dashed var(--line);display:grid;place-items:center;text-align:center;color:var(--muted);padding:16px;background:var(--surface2)}
+/* 3D-Anlage im Zeichenstil */
+.b3d{position:relative;width:100%;aspect-ratio:16/9;max-height:64vh;border-radius:16px;overflow:hidden;background:#efe6d6;border:2px solid var(--line);isolation:isolate}
+.b3d canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;filter:saturate(.92) sepia(.1)}
+.b3d-paper{position:absolute;inset:0;pointer-events:none;z-index:1;mix-blend-mode:multiply;opacity:.6;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .32 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),radial-gradient(ellipse at center,rgba(0,0,0,0) 58%,rgba(120,85,45,.32) 100%)}
+.b3d-labels{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.b3d-lab{position:absolute;transform:translate(-50%,-100%);background:#fffaf3;color:#3f3a34;border:1.5px solid #cdbfa8;border-radius:999px;padding:2px 9px;font:700 12px var(--body);white-space:nowrap;pointer-events:auto;cursor:pointer;box-shadow:0 2px 6px rgba(60,40,20,.15)}
+.b3d-lab.sel{background:#e8a33d;color:#fff;border-color:#e8a33d}
+.b3d-lab.in{background:#3f3a34;color:#f4ede4;border-color:#3f3a34;pointer-events:none}
+.b3d-lab.warn{background:#c8553d;color:#fff;border-color:#c8553d;pointer-events:none}
+.b3d-labels.off .b3d-lab:not(.in):not(.warn){display:none}
+.b3d-tools{position:absolute;right:8px;top:8px;z-index:3;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.b3d-tools button{background:#fffaf3;color:#3f3a34;border:1.5px solid #cdbfa8;border-radius:999px;padding:5px 11px;font:700 13px var(--body);cursor:pointer}
+.b3d-tools button[aria-pressed="true"]{background:#3f3a34;color:#f4ede4;border-color:#3f3a34}
+.b3d-hint{position:absolute;left:8px;bottom:8px;z-index:3;background:rgba(255,250,243,.92);color:#5a5048;border-radius:8px;padding:3px 8px;font-size:12px;pointer-events:none;transition:opacity .4s}
+.b3d.used .b3d-hint{opacity:0}
+.b3d-load{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;color:#7a7066;z-index:3;padding:16px;text-align:center}
+@media (max-width:899px){#v-sim .b3d{max-height:44vh}}
+@media (max-width:560px){.b3d-tools button{padding:4px 8px;font-size:12px}.b3d-hint{display:none}}
 .qzlist{display:grid;gap:16px}
 .qz{display:grid;gap:12px}
 .qzhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -409,11 +441,7 @@ dl.gloss dd{margin:2px 0 0}
   <div class="topbar"><button class="btn" data-go="start">← Übersicht</button><span class="where">Station 1 · So funktioniert's</span><span class="dots" aria-hidden="true"></span></div>
   <section>
   <div class="lead"><span class="eyebrow">Station 1</span><h2>So funktioniert eine Biogasanlage</h2>
-  <p>Geh die Anlage in 5 Schritten durch. Tippe auf <b>Weiter</b>. Das passende Teil leuchtet im Bild auf.</p></div>
-  <div class="scene-tools">
-    <button class="btn" id="tagToggle" aria-pressed="true">Beschriftung ausblenden</button>
-    <span class="hint" id="tagHint">Tipp: Blende die Beschriftung aus und teste, ob du alle Teile benennen kannst.</span>
-  </div>
+  <p>Geh die Anlage in 5 Schritten durch. Tippe auf <b>Weiter</b>. Die Kamera fliegt zum passenden Teil. Du kannst die Anlage selbst drehen und hineinzoomen.</p></div>
   <div class="stage-slot"></div>
   <div class="card tour" id="tour" aria-live="polite">
     <div class="tour-steps" id="tourSteps"></div>
@@ -421,7 +449,7 @@ dl.gloss dd{margin:2px 0 0}
     <div class="tour-nav"><button class="btn" id="tourPrev">Zurück</button><button class="btn primary" id="tourNext">Weiter</button></div>
   </div>
   <div class="card station-info" id="stationInfo" aria-live="polite" hidden></div>
-  <p class="hint">Du kannst auch auf jedes Teil im Bild tippen und es dir genauer ansehen.</p>
+  <p class="hint">Tippe im 3D-Bild auf ein Teil: Die Karte springt zum passenden Schritt und zeigt Foto, Erklärung und Links.</p>
   <div class="card finish" data-finish="rundgang" hidden><div><b>Station geschafft!</b><p class="hint">Die nächste Station ist jetzt frei.</p></div><div class="btns"><button class="btn" data-go="start">Zur Übersicht</button><button class="btn primary" data-go="next">Weiter</button></div></div>
   </section>
 </div>
@@ -718,6 +746,10 @@ dl.gloss dd{margin:2px 0 0}
 </div>
 
 <div id="park">
+  <div class="scene-tools">
+    <button class="btn" id="tagToggle" aria-pressed="true">Beschriftung ausblenden</button>
+    <span class="hint" id="tagHint">Tipp: Blende die Beschriftung aus und teste, ob du alle Teile benennen kannst.</span>
+  </div>
   <div class="plantbox">
   <svg id="plant" viewBox="0 0 1200 640" role="img" aria-label="Biogasanlage auf einem Bauernhof in Bayern">
     <defs>
@@ -945,6 +977,264 @@ dl.gloss dd{margin:2px 0 0}
 </div>
 <div class="pop" id="pop" hidden role="dialog" aria-live="polite"><button id="popX" aria-label="Schließen">×</button><b id="popT"></b><span id="popD"></span></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+/* ===== Biogasanlage 3D – Zeichenstil (Papier, Tusche, Aquarell) ===== */
+function Bio3D(opts){
+opts=opts||{};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root=document.createElement('div');root.className='b3d';
+root.innerHTML='<div class="b3d-paper"></div><div class="b3d-labels"></div>'+
+ '<div class="b3d-tools"><button type="button" data-a="home">Übersicht</button><button type="button" data-a="cut" aria-pressed="false">Aufschneiden</button><button type="button" data-a="lab" aria-pressed="true">Beschriftung</button></div>'+
+ '<div class="b3d-hint">Ziehen = drehen · Zoomen = zwei Finger · Antippen = ansehen</div><div class="b3d-load">3D-Anlage wird geladen …</div>';
+if(typeof THREE==='undefined'){root.querySelector('.b3d-load').textContent='Die 3D-Ansicht braucht eine Internetverbindung.';return{el:root,view(){},select(){},setState(){},setCut(){},setLabels(){},mark(){}}}
+
+const L=c=>new THREE.Color(c).convertSRGBToLinear();
+const PAPER=L('#efe6d6');
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputEncoding=THREE.sRGBEncoding;
+root.insertBefore(renderer.domElement,root.firstChild);
+const scene=new THREE.Scene();scene.background=PAPER.clone();scene.fog=new THREE.Fog(PAPER.clone(),150,430);
+const camera=new THREE.PerspectiveCamera(42,16/9,.3,1200);
+const controls=new THREE.OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=.08;controls.maxPolarAngle=Math.PI*.47;controls.minDistance=6;controls.maxDistance=230;
+const hemi=new THREE.HemisphereLight(L('#fbf3e4'),L('#8a8a5a'),.95);scene.add(hemi);
+const sun=new THREE.DirectionalLight(L('#fff1d6'),.95);sun.position.set(-60,90,55);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-100,right:100,top:80,bottom:-80,near:10,far:260});sun.shadow.bias=-.0006;scene.add(sun);
+
+// Aquarell-Stufen
+const grad=(()=>{const d=new Uint8Array([125,125,125,255,190,190,190,255,245,245,245,255]);const t=new THREE.DataTexture(d,3,1,THREE.RGBAFormat);t.minFilter=t.magFilter=THREE.NearestFilter;t.generateMipmaps=false;t.needsUpdate=true;return t})();
+const M=(c,o={})=>{const e=o.emissive;delete o.emissive;const m=new THREE.MeshToonMaterial(Object.assign({gradientMap:grad},o));m.color=L(c);if(e)m.emissive=L(e);return m};
+const inkM=new THREE.LineBasicMaterial({color:L('#4a3b2c'),transparent:true,opacity:.55});
+function ink(o,th=28){const list=[];o.traverse(m=>{if(m.isMesh&&!m.userData.noInk)list.push(m)});list.forEach(m=>m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry,th),inkM)))}
+function mesh(g,m,x=0,y=0,z=0,cast=true,recv=true){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);o.castShadow=cast;o.receiveShadow=recv;return o}
+const smooth=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t)};
+function H(x,z){const r=Math.hypot(x-5,z+5);let h=smooth(108,240,r)*(26+14*Math.sin(x*.019+1.2)+11*Math.cos(z*.024)+6*Math.sin((x+z)*.05));
+  h+=70*Math.exp(-((x+20)**2/9000+(z+300)**2/5200));h+=.6*Math.sin(x*.08)*Math.cos(z*.07)*smooth(30,100,r);return h}
+function gable(w,d,h,mat){const s=new THREE.Shape();s.moveTo(-w/2,0);s.lineTo(0,h);s.lineTo(w/2,0);s.lineTo(-w/2,0);const g=new THREE.ExtrudeGeometry(s,{depth:d,bevelEnabled:false});g.translate(0,0,-d/2);const m=new THREE.Mesh(g,mat);m.castShadow=true;return m}
+
+/* Gelände */
+{const g=new THREE.PlaneGeometry(900,900,170,170);g.rotateX(-Math.PI/2);const p=g.attributes.position,col=[],c=new THREE.Color();
+ const m1=L('#a7b47a'),m2=L('#8ea064'),fo=L('#5f7451');
+ for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i);p.setY(i,H(x,z));const r=Math.hypot(x-5,z+5);c.copy(m1).lerp(m2,.5+.5*Math.sin(x*.07+z*.05)).lerp(fo,smooth(95,170,r));col.push(c.r,c.g,c.b)}
+ g.setAttribute('color',new THREE.Float32BufferAttribute(col,3));g.computeVertexNormals();
+ const gm=new THREE.MeshToonMaterial({vertexColors:true,gradientMap:grad});scene.add(mesh(g,gm,0,0,0,false,true));
+ const road=mesh(new THREE.PlaneGeometry(140,4.5),M('#c9b48c'),15,.05,33,false,true);road.rotation.x=-Math.PI/2;scene.add(road);
+ const lane=mesh(new THREE.PlaneGeometry(4,26),M('#c9b48c'),-25,.06,20,false,true);lane.rotation.x=-Math.PI/2;scene.add(lane);}
+
+/* Fichtenwald */
+{const fol=new THREE.ConeGeometry(2.2,7.5,7);fol.translate(0,5.2,0);const fol2=new THREE.ConeGeometry(1.6,5,7);fol2.translate(0,8.2,0);
+ const N=2100,a=new THREE.InstancedMesh(fol,M('#ffffff'),N),b=new THREE.InstancedMesh(fol2,M('#ffffff'),N);a.castShadow=b.castShadow=true;
+ const d=new THREE.Object3D(),c=new THREE.Color();let i=0,seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+ function put(x,z,s){d.position.set(x,H(x,z)-.2,z);d.rotation.y=rnd()*6.28;d.scale.setScalar(s);d.updateMatrix();a.setMatrixAt(i,d.matrix);b.setMatrixAt(i,d.matrix);c.setHSL(.27+rnd()*.06,.22+rnd()*.12,.26+rnd()*.08).convertSRGBToLinear();a.setColorAt(i,c);b.setColorAt(i,c);i++}
+ while(i<N-280){const ang=rnd()*6.283,r=115+Math.pow(rnd(),.8)*320;put(5+Math.cos(ang)*r,-5+Math.sin(ang)*r,.8+rnd()*.9)}
+ [[-80,-48,16],[30,-58,16],[98,36,13],[-100,42,14]].forEach(([gx,gz,gr])=>{for(let k=0;k<68&&i<N;k++){const ang=rnd()*6.28,r=Math.sqrt(rnd())*gr;put(gx+Math.cos(ang)*r,gz+Math.sin(ang)*r,.7+rnd()*.6)}});
+ a.count=b.count=i;scene.add(a,b);}
+
+/* Bauteile */
+const parts={},pick=[];
+function part(id,group,doInk=true){if(doInk)ink(group);group.traverse(o=>{if(o.isMesh){o.userData.part=id;pick.push(o)}});scene.add(group);parts[id]=group}
+const V={ // Kamera-Ansichten [Position, Ziel]
+ overview:[[-40,50,100],[0,2,0]], sim:[[-14,30,58],[14,2,-4]],
+ futter:[[-66,30,62],[-34,2,6]], gas:[[6,19,24],[0,6,-2]], energie:[[34,22,44],[34,3,-2]], kreislauf:[[-52,22,-36],[-28,2,-8]],
+ feld:[[-98,24,52],[-76,2,2]], stall:[[-64,15,-2],[-41,3,-10]], hof:[[-56,12,30],[-40,4,7]], silo:[[-24,15,34],[-22,1,12]], annahme:[[-15,9,22],[-8,2,8]], tonne:[[-10,6,20],[-5,1,12]],
+ fermenter:[[5,12,21],[0,3,-1.5]], gaerrest:[[-30,14,-28],[-19,3,-9]], bhkw:[[22,7,20],[17,2,5]], strom:[[22,22,30],[34,9,-6]], dorf:[[44,24,45],[64,5,-10]]
+};
+const NAMES={feld:'Maisfeld',stall:'Stall und Kühe',hof:'Bauernhof',silo:'Fahrsilo',annahme:'Annahme',tonne:'Biomüll',fermenter:'Fermenter',gaerrest:'Gärrestlager',bhkw:'Blockheizkraftwerk',strom:'Stromnetz',dorf:'Dorf mit Nahwärme'};
+const LBLPOS={feld:[-76,5,0],stall:[-40,12,-10],hof:[-40,12,7],silo:[-22,5,12],annahme:[-8,7,8],tonne:[-5,3.4,12],fermenter:[0,11.5,0],gaerrest:[-19,9.5,-9],bhkw:[17,6.5,5],strom:[34,23,-6],dorf:[64,24,-14]};
+
+/* Maisfeld */
+{const g=new THREE.Group();const st=new THREE.CylinderGeometry(.05,.09,2.6,4);st.translate(0,1.3,0);const lf=new THREE.ConeGeometry(.55,2.1,5,1,true);lf.translate(0,1.4,0);const cb=new THREE.CylinderGeometry(.12,.1,.5,5);cb.translate(.12,1.7,0);
+ const N=1500,s=new THREE.InstancedMesh(st,M('#8a9a4a'),N),l=new THREE.InstancedMesh(lf,M('#93a552',{side:THREE.DoubleSide}),N),c=new THREE.InstancedMesh(cb,M('#d9bb66'),N);
+ const d=new THREE.Object3D();let i=0;for(let row=0;row<30;row++)for(let k=0;k<50&&i<N;k++){d.position.set(-92+k*.62+(Math.random()-.5)*.2,0,-14+row*1.05);d.rotation.y=Math.random()*6.3;d.scale.setScalar(.85+Math.random()*.35);d.updateMatrix();s.setMatrixAt(i,d.matrix);l.setMatrixAt(i,d.matrix);c.setMatrixAt(i,d.matrix);i++}
+ [s,l,c].forEach(m=>{m.castShadow=true;m.receiveShadow=true;g.add(m)});const soil=mesh(new THREE.PlaneGeometry(33,33),M('#8f7a55'),-76.5,.04,1.5,false,true);soil.rotation.x=-Math.PI/2;g.add(soil);part('feld',g,false)}
+
+/* Stall (Stadel) */
+{const g=new THREE.Group();const wood=M('#7d5a3c'),stone=M('#d6cdbc'),roof=M('#6a4433');
+ g.add(mesh(new THREE.BoxGeometry(12,2.4,18),stone,0,1.2,0));g.add(mesh(new THREE.BoxGeometry(12,3.2,18),wood,0,4,0));
+ const r=gable(15,19.6,3.2,roof);r.position.y=5.6;g.add(r);
+ const pvg=new THREE.PlaneGeometry(6.6,16);pvg.rotateX(-Math.PI/2);const pv=mesh(pvg,M('#3b4a5c'),-3.75,7.28,0,false,false);pv.rotation.z=Math.atan(3.2/7.5);g.add(pv);
+ g.add(mesh(new THREE.BoxGeometry(.2,3,4.5),M('#5a3c26'),6.05,1.5,-2));
+ g.position.set(-40,0,-10);
+ const herd=new THREE.Group();
+ function cow(x,z,ry){const c=new THREE.Group(),red=M('#9a5a35'),white=M('#f3ece0'),dark=M('#3a2c22');c.add(mesh(new THREE.BoxGeometry(2.4,1.1,1),red,0,1.35,0));c.add(mesh(new THREE.BoxGeometry(.9,1.12,1.02),white,-.3,1.35,0));c.add(mesh(new THREE.BoxGeometry(.7,.7,.62),white,1.45,1.6,0));c.add(mesh(new THREE.BoxGeometry(.2,.3,.5),dark,1.83,1.5,0));
+  [[-.85,.4],[-.85,-.4],[.85,.4],[.85,-.4]].forEach(([a,b])=>c.add(mesh(new THREE.BoxGeometry(.24,.85,.24),white,a,.43,b)));c.position.set(x,0,z);c.rotation.y=ry;c.traverse(o=>o.userData.noInk=true);return c}
+ [[-58,20,.4],[-53,23,-.6],[-48,19.5,2.2],[-61,25,1.2],[-50,26,-1.2]].forEach(c=>herd.add(cow(...c)));
+ const fence=new THREE.Group(),fm=M('#6a4e34');for(let k=0;k<=13;k++)fence.add(mesh(new THREE.BoxGeometry(.2,1.4,.2),fm,-66+k*2,.7,29));
+ fence.add(mesh(new THREE.BoxGeometry(26,.15,.12),fm,-53,1.1,29));fence.add(mesh(new THREE.BoxGeometry(26,.15,.12),fm,-53,.6,29));fence.traverse(o=>o.userData.noInk=true);
+ [[-64,18,1.6],[-44,27,1.1],[-60,10,1.3]].forEach(([x,z,s])=>{const b=mesh(new THREE.DodecahedronGeometry(s,0),M('#a9a49b'),x,s*.5,z);b.scale.y=.6;herd.add(b)});
+ const all=new THREE.Group();all.add(g,herd,fence);part('stall',all)}
+
+/* Bauernhof: Waldlerhaus (Wohnteil unter einem First mit dem Stadel) */
+{const g=new THREE.Group();const plaster=M('#efe8da'),wood=M('#6e4c33'),roof=M('#6a4433'),glass=M('#4b5a63'),shut=M('#4f6a45'),flower=M('#c8553d');
+ g.add(mesh(new THREE.BoxGeometry(12,2.8,14),plaster,0,1.4,0));g.add(mesh(new THREE.BoxGeometry(12.2,2.8,14.2),wood,0,4.2,0));
+ const r=gable(15,15.6,3.2,roof);r.position.y=5.6;g.add(r);
+ g.add(mesh(new THREE.BoxGeometry(1,2.4,1),M('#c9c0b0'),2.2,7.6,2));
+ // Giebelbalkon vorne
+ g.add(mesh(new THREE.BoxGeometry(11,.2,1.5),wood,0,3.0,7.8));
+ for(let k=0;k<23;k++)g.add(mesh(new THREE.BoxGeometry(.1,1,.08),wood,-5.4+k*.49,3.6,8.45,false,false));
+ g.add(mesh(new THREE.BoxGeometry(11,.14,.14),wood,0,4.12,8.45));
+ // Fenster mit Läden
+ [-3.6,0,3.6].forEach(x=>{g.add(mesh(new THREE.BoxGeometry(1,1.1,.05),glass,x,1.6,7.03,false,false));g.add(mesh(new THREE.BoxGeometry(.45,1.1,.05),shut,x-.75,1.6,7.04,false,false));g.add(mesh(new THREE.BoxGeometry(.45,1.1,.05),shut,x+.75,1.6,7.04,false,false));
+   g.add(mesh(new THREE.BoxGeometry(.9,1,.05),glass,x,4.6,7.13,false,false));g.add(mesh(new THREE.BoxGeometry(1.2,.3,.35),flower,x,3.35,8.0,false,false))});
+ [-4,-1,2,5].forEach(z=>g.add(mesh(new THREE.BoxGeometry(.05,1.1,1),glass,6.03,1.6,z,false,false)));
+ g.add(mesh(new THREE.BoxGeometry(.05,2.1,1.2),M('#5a3a24'),6.04,1.05,.5,false,false));
+ g.add(mesh(new THREE.BoxGeometry(1.8,.4,1.4),M('#b9b2a4'),7,.2,.5));
+ g.position.set(-40,0,7);part('hof',g)}
+
+/* Fahrsilo */
+{const g=new THREE.Group(),con=M('#c9c3b6');g.add(mesh(new THREE.BoxGeometry(18,2.4,.5),con,0,1.2,-4));g.add(mesh(new THREE.BoxGeometry(.5,2.4,8),con,-9,1.2,0));g.add(mesh(new THREE.BoxGeometry(.5,2.4,8),con,9,1.2,0));
+ const pile=new THREE.CylinderGeometry(3.6,3.6,17,16,1,false,0,Math.PI);pile.rotateZ(Math.PI/2);pile.rotateX(Math.PI/2);pile.scale(1,.62,1);const pm=mesh(pile,M('#2b2a28'),0,.2,0);pm.userData.noInk=true;g.add(pm);
+ const tire=new THREE.TorusGeometry(.45,.18,6,10),tm=M('#1d1d1c');for(let k=0;k<14;k++)for(let j=0;j<3;j++){const t=mesh(tire,tm,-7.5+k*1.15,0,0);const a=(j-1)*.75;t.position.y=.25+3.6*.62*Math.cos(a)-.08;t.position.z=3.6*Math.sin(a);t.rotation.x=-Math.PI/2+a;t.userData.noInk=true;g.add(t)}
+ g.position.set(-22,0,12);part('silo',g)}
+
+/* Annahme + Biotonne */
+{const g=new THREE.Group(),green=M('#5f7f4a');g.add(mesh(new THREE.BoxGeometry(4,2.6,3.2),green,0,1.6,0));const hop=mesh(new THREE.CylinderGeometry(2.6,1.6,1.6,4,1,true),M('#557343',{side:THREE.DoubleSide}),0,3.7,0);hop.rotation.y=Math.PI/4;g.add(hop);
+ [[-1.7,-1.4],[1.7,-1.4],[-1.7,1.4],[1.7,1.4]].forEach(([a,b])=>g.add(mesh(new THREE.BoxGeometry(.25,.6,.25),M('#6a6560'),a,.3,b)));
+ const pipe=mesh(new THREE.CylinderGeometry(.35,.35,6.5,10),M('#a3a29c'),3.2,3.2,-3.2);pipe.rotation.set(.55,.78,1.1);g.add(pipe);g.position.set(-8,0,8);part('annahme',g);
+ const t=new THREE.Group();t.add(mesh(new THREE.BoxGeometry(1.2,1.6,1.3),M('#7a5232'),0,.8,0));t.add(mesh(new THREE.BoxGeometry(1.3,.12,1.4),M('#5e3e26'),0,1.66,0));
+ [[-.5,.66],[.5,.66]].forEach(([x,z])=>{const w=mesh(new THREE.CylinderGeometry(.18,.18,.12,10),M('#2a2a2a'),x,.18,z);w.rotation.x=Math.PI/2;t.add(w)});t.position.set(-4.5,0,12);t.rotation.y=.3;part('tonne',t)}
+
+/* Fermenter */
+const ferm={};
+{const g=new THREE.Group(),R=7,Hh=5;ferm.R=R;
+ const closed=new THREE.Group();closed.add(mesh(new THREE.CylinderGeometry(R,R,Hh,48),M('#d3cdbf'),0,Hh/2,0));
+ const domeM=M('#7d9a5a');ferm.domeM=domeM;const d=mesh(new THREE.SphereGeometry(R,48,24,0,Math.PI*2,0,Math.PI/2),domeM,0,Hh,0);d.scale.y=.62;closed.add(d);
+ for(let k=0;k<12;k++){const rib=new THREE.Mesh(new THREE.TorusGeometry(R,.05,4,32,Math.PI/2),M('#5e7a44'));rib.position.y=Hh;rib.rotation.order='YXZ';rib.rotation.set(0,k/12*Math.PI*2,Math.PI/2);rib.scale.set(.62,1,1);rib.userData.noInk=true;closed.add(rib)}
+ const cut=new THREE.Group();const T0=Math.PI*.5,TL=Math.PI;
+ cut.add(mesh(new THREE.CylinderGeometry(R,R,Hh,48,1,true,T0,TL),M('#d3cdbf',{side:THREE.DoubleSide}),0,Hh/2,0));
+ [-1,1].forEach(sg=>cut.add(mesh(new THREE.BoxGeometry(.45,Hh,.45),M('#b3ac9e'),sg*(R-.05),Hh/2,0)));
+ const dc=mesh(new THREE.SphereGeometry(R,48,24,0,Math.PI*2,0,Math.PI/2),M('#8fb06a',{side:THREE.DoubleSide,transparent:true,opacity:.2,depthWrite:false}),0,Hh,0,false,false);dc.scale.y=.62;dc.userData.noInk=true;cut.add(dc);
+ const subG=new THREE.CylinderGeometry(R-.25,R-.25,1,48,1,false,T0,TL);subG.translate(0,.5,0);
+ const sub=mesh(subG,M('#8a6a42',{side:THREE.DoubleSide,transparent:true,opacity:.82}),0,.2,0);sub.scale.y=3.4;cut.add(sub);ferm.sub=sub;
+ const capG=new THREE.PlaneGeometry(R*2-.5,1);capG.translate(0,.5,0);const cap=mesh(capG,M('#9a774c',{side:THREE.DoubleSide,transparent:true,opacity:.42,depthWrite:false}),0,.2,0,false,false);cap.scale.y=3.4;cap.userData.noInk=true;cut.add(cap);ferm.cap=cap;
+ const heat=new THREE.Mesh(new THREE.TorusGeometry(R-.6,.13,6,48,TL),M('#c8553d',{emissive:'#6a1a10'}));heat.rotation.set(-Math.PI/2,0,0);heat.position.y=.8;cut.add(heat);ferm.heat=heat;
+ const stir=new THREE.Group();stir.add(mesh(new THREE.CylinderGeometry(.12,.12,6,8),M('#9a9a94'),0,0,0));const blade=mesh(new THREE.BoxGeometry(2.6,.08,.6),M('#c2c0b8'),0,-2.6,0);stir.add(blade);stir.position.set(-2.5,3.2,-2.2);stir.rotation.z=.5;cut.add(stir);ferm.stir=stir;
+ const bac=new THREE.Group();const bcols=['#d98a52','#cfae4a','#78a9c9','#a979c4'];
+ for(let k=0;k<70;k++){const a=T0+Math.random()*TL,r=Math.sqrt(Math.random())*(R-1);const b=mesh(new THREE.SphereGeometry(.16,8,6),M(bcols[k%4],{emissive:bcols[k%4]}),Math.sin(a)*r,.5+Math.random()*2.9,Math.cos(a)*r,false,false);b.material.emissiveIntensity=.35;b.scale.set(2.2,1,1);b.rotation.set(Math.random()*3,Math.random()*3,0);b.userData.ph=Math.random()*6;b.userData.y=b.position.y;b.userData.noInk=true;bac.add(b)}
+ cut.add(bac);ferm.bac=bac;
+ const NB=170,bg=new THREE.BufferGeometry(),bp=new Float32Array(NB*3),bs=[];for(let k=0;k<NB;k++){const a=T0+Math.random()*TL,r=Math.sqrt(Math.random())*(R-1);bp[k*3]=Math.sin(a)*r;bp[k*3+1]=Math.random()*8;bp[k*3+2]=Math.cos(a)*r;bs.push(.6+Math.random()*.8)}
+ bg.setAttribute('position',new THREE.BufferAttribute(bp,3));const bubbles=new THREE.Points(bg,new THREE.PointsMaterial({color:L('#e8b63a'),size:.4,transparent:true,opacity:.95,depthWrite:false}));cut.add(bubbles);ferm.bub={pts:bubbles,sp:bs,N:NB};
+ cut.visible=false;g.add(closed,cut);ferm.closed=closed;ferm.cut=cut;
+ g.add(mesh(new THREE.BoxGeometry(.8,1.4,.3),M('#eeeae0'),R*.72,2.6,R*.72));
+ part('fermenter',g)}
+
+/* Gärrestlager */
+{const g=new THREE.Group();g.add(mesh(new THREE.CylinderGeometry(6,6,4.2,40),M('#cbc5b8'),0,2.1,0));const d=mesh(new THREE.SphereGeometry(6,40,20,0,Math.PI*2,0,Math.PI/2),M('#a9aba0'),0,4.2,0);d.scale.y=.55;g.add(d);g.position.set(-19,0,-9);part('gaerrest',g)}
+
+/* Blockheizkraftwerk */
+const bhkw={};
+{const g=new THREE.Group(),sh=M('#cfd0c9');g.add(mesh(new THREE.BoxGeometry(10,.25,3.4),sh,0,.12,0));g.add(mesh(new THREE.BoxGeometry(10,3.2,.12),sh,0,1.7,-1.65));
+ g.add(mesh(new THREE.BoxGeometry(.12,3.2,3.4),sh,-5,1.7,0));g.add(mesh(new THREE.BoxGeometry(.12,3.2,3.4),sh,5,1.7,0));g.add(mesh(new THREE.BoxGeometry(10,.15,3.4),sh,0,3.3,0));
+ const front=new THREE.Group();front.add(mesh(new THREE.BoxGeometry(10,3.2,.12),sh,0,1.7,1.65));for(let k=0;k<20;k++){const rb=mesh(new THREE.BoxGeometry(.06,2.8,.05),M('#b3b4ad'),-4.6+k*.48,1.7,1.73,false,false);rb.userData.noInk=true;front.add(rb)}g.add(front);bhkw.front=front;
+ const inner=new THREE.Group();inner.add(mesh(new THREE.BoxGeometry(3.6,1.6,1.6),M('#66737a'),-1.6,1.1,0));for(let k=0;k<4;k++)inner.add(mesh(new THREE.CylinderGeometry(.18,.18,.5,8),M('#9ba3a7'),-3+k*.9,2.1,0));
+ const gen=mesh(new THREE.CylinderGeometry(.85,.85,1.8,24),M('#3f6a8c'),1.6,1.15,0);gen.rotation.z=Math.PI/2;inner.add(gen);
+ const shaft=mesh(new THREE.CylinderGeometry(.12,.12,1.2,8),M('#dddad2'),.3,1.15,0);shaft.rotation.z=Math.PI/2;inner.add(shaft);bhkw.shaft=shaft;
+ const spark=mesh(new THREE.SphereGeometry(.18,8,6),M('#f2c230',{emissive:'#ffb000'}),2.7,1.15,0,false,false);spark.userData.noInk=true;inner.add(spark);bhkw.spark=spark;
+ inner.add(mesh(new THREE.BoxGeometry(1.2,1.2,1.2),M('#b5523c'),3.9,.9,.4));g.add(inner);
+ g.add(mesh(new THREE.CylinderGeometry(.22,.22,3.4,10),M('#9a9a94'),3.6,4.9,-1));g.position.set(17,0,5);part('bhkw',g)}
+const smokeTex=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d');const gr=x.createRadialGradient(32,32,2,32,32,30);gr.addColorStop(0,'rgba(255,255,255,.9)');gr.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gr;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(c)})();
+const smoke=[];for(let k=0;k<10;k++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:smokeTex,color:L('#e8e2d6'),transparent:true,depthWrite:false}));s.userData.t=k/10;scene.add(s);smoke.push(s)}
+
+/* Leitungen */
+function stripeTex(a,b){const c=document.createElement('canvas');c.width=64;c.height=8;const x=c.getContext('2d');x.fillStyle=a;x.fillRect(0,0,64,8);x.fillStyle=b;x.fillRect(0,0,22,8);const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.encoding=THREE.sRGBEncoding;return t}
+const flows=[];
+function pipe(pts,r,a,b,rep,id){const curve=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));const tex=stripeTex(a,b);tex.repeat.set(rep,1);
+ const m=mesh(new THREE.TubeGeometry(curve,80,r,10,false),new THREE.MeshToonMaterial({map:tex,gradientMap:grad}));scene.add(m);flows.push(tex);if(id){m.userData.part=id;pick.push(m)}return m}
+pipe([[0,9.2,0],[0,10.2,2],[6,10.2,4],[12,6,4.5],[15,3.4,4.6]],.28,'#d9b04a','#f6e7b8',18,'bhkw');
+pipe([[19,.6,6.8],[30,.5,9],[48,.5,8],[58,.5,2],[64,.5,-4]],.3,'#c8553d','#efb9a8',30,'dorf');
+pipe([[64.6,.5,-3],[58.6,.5,3.2],[48,.5,9.4],[30,.5,9.6],[19,.6,7.4]],.3,'#4f7fa8','#bcd3e6',30,'dorf');
+pipe([[13,.6,6],[8,.5,6],[4,.5,6.2]],.22,'#c8553d','#efb9a8',6,'fermenter');
+
+/* Strommast */
+{const g=new THREE.Group(),steel=M('#6f716c');
+ [[-1.6,-1.6],[1.6,-1.6],[1.6,1.6],[-1.6,1.6]].forEach(([x,z])=>{const l=mesh(new THREE.CylinderGeometry(.08,.14,22,6),steel,x*.55,11,z*.55);l.rotation.set(z*-.065,0,x*.065);g.add(l)});
+ for(let k=0;k<7;k++){const y=2+k*3,w=3.2-k*.33;g.add(mesh(new THREE.BoxGeometry(w,.08,.08),steel,0,y,w/2*.98));g.add(mesh(new THREE.BoxGeometry(w,.08,.08),steel,0,y,-w/2*.98));g.add(mesh(new THREE.BoxGeometry(.08,.08,w),steel,w/2*.98,y,0));g.add(mesh(new THREE.BoxGeometry(.08,.08,w),steel,-w/2*.98,y,0))}
+ g.add(mesh(new THREE.BoxGeometry(9,.25,.25),steel,0,18,0));g.add(mesh(new THREE.BoxGeometry(6,.25,.25),steel,0,21.5,0));g.position.set(34,0,-6);
+ const all=new THREE.Group();all.add(g,mesh(new THREE.BoxGeometry(1.6,2,1.6),M('#9a9c95'),23.5,1,4));g.traverse(o=>o.userData.noInk=true);
+ const wm=new THREE.LineBasicMaterial({color:L('#3a332b')});
+ function wire(a,b,sag){const p=[];for(let i=0;i<=24;i++){const t=i/24;p.push(new THREE.Vector3(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t-sag*4*t*(1-t),a[2]+(b[2]-a[2])*t))}all.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),wm))}
+ [-4.4,0,4.4].forEach(dx=>{wire([23.5,2,4],[34+dx*.6,18,-6],1.5);wire([34+dx,18,-6],[78+dx,18+H(78,-40),-40],3)});part('strom',all)}
+
+/* Dorf mit Kirche */
+const winM=M('#55646b',{emissive:'#ffcf66'});winM.emissiveIntensity=0;
+{const g=new THREE.Group(),wall=M('#f1ebdf'),roof=M('#8c4a36');
+ function house(x,z,w,d,h,ry){const hg=new THREE.Group();hg.add(mesh(new THREE.BoxGeometry(w,h,d),wall,0,h/2,0));const r=gable(w+.8,d+.8,w*.42,roof);r.position.y=h;hg.add(r);
+  for(let k=0;k<3;k++)hg.add(mesh(new THREE.PlaneGeometry(.8,.9),winM,-w/3+k*w/3,h*.6,d/2+.02,false,false));hg.add(mesh(new THREE.BoxGeometry(.9,1.6,.05),M('#6b4528'),w/4,.8,d/2+.03,false,false));hg.position.set(x,H(x,z),z);hg.rotation.y=ry;g.add(hg)}
+ [[48,10,7,6,4.2,.1],[56,14,6,7,4,.3],[75,2,7,6,4.4,-.2],[44,-10,6,6,4,.6],[80,-16,8,7,4.6,0],[52,-24,7,6,4.2,.2],[72,-30,7,6,4,-.3],[86,-4,6,6,4,.4]].forEach(h=>house(...h));
+ const c=new THREE.Group(),cw=M('#f6f1e6'),dark=M('#4a524c');c.add(mesh(new THREE.BoxGeometry(10,8,18),cw,0,4,0));const cr=gable(10.6,18.6,4.2,roof);cr.position.y=8;c.add(cr);
+ const dome=mesh(new THREE.SphereGeometry(4.2,32,16,0,Math.PI*2,0,Math.PI/2),dark,0,9.5,2);dome.scale.y=.8;c.add(dome);c.add(mesh(new THREE.CylinderGeometry(4.3,4.3,1.6,32),cw,0,8.8,2));
+ c.add(mesh(new THREE.BoxGeometry(5.2,22,5.2),cw,0,11,-11.5));
+ const prof=[[0,0],[2.4,0],[3,1.4],[2.6,2.8],[1,4.2],[.55,5.2],[1.1,6.1],[.9,7],[.35,7.6],[.2,9.6],[0,9.8]].map(p=>new THREE.Vector2(p[0],p[1]));
+ const on=mesh(new THREE.LatheGeometry(prof,28),dark,0,22,-11.5);on.userData.noInk=true;c.add(on);c.add(mesh(new THREE.SphereGeometry(.35,10,8),M('#c9a640'),0,32.2,-11.5));
+ for(let k=0;k<4;k++)c.add(mesh(new THREE.PlaneGeometry(1,2.2),winM,-3+k*2,6+(k%2)*8,9.01,false,false));c.add(mesh(new THREE.CircleGeometry(.9,16),M('#3a3a3a'),0,18,-8.88,false,false));
+ c.position.set(64,H(64,-14),-14);c.rotation.y=-.35;g.add(c);
+ const kl=new THREE.Group();kl.add(mesh(new THREE.BoxGeometry(22,7,7),wall,0,3.5,0));const kr=gable(7.6,22.6,3,roof);kr.position.y=7;kr.rotation.y=Math.PI/2;kl.add(kr);for(let i=0;i<8;i++)kl.add(mesh(new THREE.PlaneGeometry(.9,1.1),winM,-9+i*2.6,4.5,3.52,false,false));kl.position.set(78,H(78,-26),-26);kl.rotation.y=-.35;g.add(kl);
+ part('dorf',g)}
+
+/* Beschriftungen */
+const labEl=root.querySelector('.b3d-labels'),LBL=[];
+function addLabel(t,pos,id,cls,cond){const e=document.createElement('button');e.type='button';e.className='b3d-lab'+(cls?' '+cls:'');e.textContent=t;e.tabIndex=-1;if(id)e.onclick=()=>opts.onPick&&opts.onPick(id);labEl.appendChild(e);const o={el:e,pos:new THREE.Vector3(...pos),id,cond};LBL.push(o);return o}
+Object.keys(LBLPOS).forEach(id=>addLabel(NAMES[id],LBLPOS[id],id));
+let cutOn=false;
+const nearF=()=>camera.position.distanceTo(new THREE.Vector3(0,3,0))<60,nearB=()=>camera.position.distanceTo(new THREE.Vector3(17,2,5))<45;
+[['Bakterien',[2.2,2.6,-3.2],nearF],['Biogas',[-1,7.4,-2.4],nearF],['Rührwerk',[-3.8,4.8,-3.6],nearF],['Heizung',[5,1.2,-4.4],nearF],['Motor',[15.4,3,5.5],nearB],['Generator',[18.6,3,5.5],nearB]]
+ .forEach(([t,p,f])=>addLabel(t,p,null,'in',()=>cutOn&&f()));
+const warn=addLabel('Luft im Fermenter!',[0,13.5,0],null,'warn',()=>!S.dicht);
+
+/* Steuerung */
+let fly=null;const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function flyTo(v,dur=1.3){if(!v)return;fly={s:performance.now(),dur:RM?1:dur*1000,p0:camera.position.clone(),t0:controls.target.clone(),p1:new THREE.Vector3(...v[0]),t1:new THREE.Vector3(...v[1])}}
+function setCut(v){cutOn=!!v;ferm.closed.visible=!cutOn;ferm.cut.visible=cutOn;bhkw.front.visible=!cutOn;root.querySelector('[data-a="cut"]').setAttribute('aria-pressed',String(cutOn))}
+function setLabels(v){labEl.classList.toggle('off',!v);root.querySelector('[data-a="lab"]').setAttribute('aria-pressed',String(!!v))}
+let marked=[];function mark(ids){marked=ids||[];LBL.forEach(l=>l.el.classList.toggle('sel',!!l.id&&marked.includes(l.id)))}
+let homeV='overview';
+root.querySelector('.b3d-tools').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a;
+ if(a==='home'){flyTo(V[homeV]);mark([])}if(a==='cut'){setCut(!cutOn);if(cutOn)flyTo(V.fermenter)}if(a==='lab')setLabels(b.getAttribute('aria-pressed')!=='true')});
+const ray=new THREE.Raycaster(),ndc=new THREE.Vector2();let down=null;
+renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];root.classList.add('used')});
+renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>6)return;const r=renderer.domElement.getBoundingClientRect();ndc.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(ndc,camera);
+ const vis=o=>{while(o){if(!o.visible)return false;o=o.parent}return true};const hit=ray.intersectObjects(pick.filter(vis),false)[0];if(hit&&opts.onPick)opts.onPick(hit.object.userData.part)});
+
+let S={act:.6,T:38,dicht:true,total:55,over:1,bio:0};
+function setState(s){S=Object.assign(S,s);const lvl=Math.min(1.25,.55+S.total/120);ferm.sub.scale.y=ferm.cap.scale.y=3.4*lvl;
+ ferm.domeM.color=L(S.dicht?'#7d9a5a':'#a9b48c');parts.tonne.visible=S.bio>0||true}
+
+/* Schleife */
+const clock=new THREE.Clock(),v=new THREE.Vector3();let lastW=0,lastH=0;
+function resize(){const w=root.clientWidth,h=root.clientHeight;if(!w||!h||(w===lastW&&h===lastH))return;lastW=w;lastH=h;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+function tick(){requestAnimationFrame(tick);
+ if(!root.isConnected||root.offsetParent===null){clock.getDelta();return}
+ resize();const dt=Math.min(clock.getDelta(),.05),time=clock.elapsedTime,mov=RM?.15:1,a=S.dicht?S.act:S.act*.1;
+ if(fly){const k=Math.min(1,(performance.now()-fly.s)/fly.dur),e=ease(k);camera.position.lerpVectors(fly.p0,fly.p1,e);controls.target.lerpVectors(fly.t0,fly.t1,e);if(k>=1)fly=null}
+ controls.update();
+ flows.forEach((t,i)=>{t.offset.x-=dt*(i===0?.6:.35)*(.08+a*1.6)*mov});
+ if(ferm.cut.visible){const p=ferm.bub.pts.geometry.attributes.position,n=Math.round(ferm.bub.N*a),top=.2+3.4*ferm.sub.scale.y/3.4;
+  for(let k=0;k<ferm.bub.N;k++){let y=p.getY(k);if(y<0)y=Math.random()*top;y+=dt*1.6*ferm.bub.sp[k]*mov;if(y>7.6)y=.4;p.setY(k,k<n?y:-50)}p.needsUpdate=true;
+  ferm.bac.children.forEach(b=>{b.position.y=b.userData.y+Math.sin(time*1.4+b.userData.ph)*.15*mov;b.rotation.z+=dt*.5*mov;b.material.emissiveIntensity=S.dicht?.35:.02});
+  ferm.stir.rotation.y+=dt*1.2*mov;ferm.heat.material.emissiveIntensity=.15+.7*Math.min(1,S.T/38)}
+ bhkw.shaft.rotation.x+=dt*20*a*mov;bhkw.spark.material.emissiveIntensity=a>.02?1+Math.sin(time*18)*.6:0;
+ smoke.forEach(s=>{s.userData.t=(s.userData.t+dt*.25*mov)%1;const t=s.userData.t;s.position.set(20.6+t*3,8.6+t*9,4+t*1.5);const sc=1.2+t*4;s.scale.set(sc,sc,1);s.material.opacity=(a>.02?.5:0)*(1-t)});
+ winM.emissiveIntensity=.15+a*.9;
+ renderer.render(scene,camera);
+ const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;
+ LBL.forEach(l=>{if(l.cond&&!l.cond()){l.el.style.display='none';return}v.copy(l.pos).project(camera);const d=camera.position.distanceTo(l.pos);
+  if(v.z>1||Math.abs(v.x)>1.02||Math.abs(v.y)>1.02||(!l.cond&&d>240)){l.el.style.display='none';return}
+  l.el.style.display='';l.el.style.left=((v.x+1)/2*W)+'px';l.el.style.top=((1-v.y)/2*Hh-6)+'px'});
+}
+camera.position.set(...V.overview[0]);controls.target.set(...V.overview[1]);
+root.querySelector('.b3d-load').remove();tick();
+
+return{el:root,
+ view(name,cut){if(typeof cut==='boolean')setCut(cut);flyTo(V[name]);if(name==='overview'||name==='sim')homeV=name},
+ select(id){flyTo(V[id]);mark([id]);if(id==='fermenter'||id==='bhkw')setCut(true)},
+ setState,setCut,setLabels,mark,parts:Object.keys(NAMES),names:NAMES};
+}
+
+</script>
 <script>
 const $=s=>document.querySelector(s);
 const fmt=n=>Math.round(n).toLocaleString('de-DE');
@@ -1042,6 +1332,7 @@ const TOUR=[
 let tStep=0;const tSeen=new Set([0]);
 function tourShow(i){tStep=i;tSeen.add(i);const T=TOUR[i];
  document.querySelectorAll('.st').forEach(g=>g.classList.toggle('sel',T.ids.includes(g.dataset.id)));
+ if(typeof bio!=='undefined'&&bio){bio.view(['futter','fermenter','gas','energie','kreislauf'][i],i===1||i===2);bio.mark(T.ids.map(x=>ST3[x]||x))}
  $('#tourSteps').innerHTML=TOUR.map((_,j)=>`<button class="${j===i?'on':''} ${tSeen.has(j)&&j!==i?'done':''}" data-j="${j}" aria-label="Schritt ${j+1}">${j+1}</button>`).join('');
  const ph=PHOTOS[T.photo];
  const fig=ph?`<figure><img src="${ph.src}" alt="${ph.alt}"><figcaption>Foto: ${ph.alt}. ${ph.author}, <a href="${ph.page}" target="_blank" rel="noopener">Wikimedia Commons</a>, ${ph.license}</figcaption></figure>`:'';
@@ -1102,7 +1393,7 @@ function render(gm,gg,gb){
  $('#lvGas').textContent=fmt(s.gas)+' m³/Tag';$('#lvTemp').textContent=s.T+' °C';$('#lvStrom').textContent=fmt(s.el)+' kWh Strom/Tag';
  const act=Math.min(1,s.gas/6000);
  document.documentElement.style.setProperty('--spd',(act>0.02?(2.6-act*1.9):60)+'s');
- sceneUpdate(s,act);
+ sceneUpdate(s,act);if(typeof bio!=='undefined'&&bio)bio.setState({act,T:s.T,dicht:s.dicht,total:s.total,bio:s.bio});
  bubbles(act);
  // status
  let cls='ok',t='Die Bakterien sind zufrieden',x='Alles läuft gut. Es entsteht viel Biogas.',mouth='M16 33 Q26 41 36 33';
@@ -1249,6 +1540,39 @@ function complete(id){const first=!prog[id];prog[id]=true;saveProg();showFinish(
 
 /* ---------- Seiten wechseln ---------- */
 let route='start';
+const MAP3={feld:'feld',stall:'kuh',hof:'hof',silo:'silo',annahme:'annahme',tonne:'tonne',fermenter:'fermenter',gaerrest:'gaerrest',bhkw:'bhkw',strom:'strom',dorf:'haus'};
+const ST3={kuh:'stall',haus:'dorf',dach:'fermenter',waerme:'bhkw',aufbereitung:'bhkw'};
+ST.hof=["Der Bauernhof","Hier wohnt die Bauernfamilie, die die Biogasanlage betreibt. Im Bayerischen Wald stehen Wohnhaus und Stall oft unter einem Dach.","So ein Hof heißt Waldlerhaus: unten gemauert, oben aus Holz, mit Balkon und flachem Dach. Die Familie heizt ihr Haus oft mit der Wärme aus der eigenen Biogasanlage."];
+var bio=Bio3D({onPick:id=>{if(!id)return;const st=MAP3[id]||id;
+ if(route==='rundgang'){let step=STEPP[tStep].includes(st)?tStep:STEPP.findIndex(a=>a.includes(st));if(step<0)step=tStep;tourShow(step,st);
+   const t=$('#tour'),r=t.getBoundingClientRect();if(r.top>innerHeight-120)t.scrollIntoView({behavior:'smooth',block:'nearest'})}
+ else showStation(st)}});
+/* ---------- Rundgang: Schritte 1–5 mit den Teilen im 3D-Bild ---------- */
+const STEPP=[['feld','kuh','hof','silo','annahme','tonne'],['fermenter'],['dach'],['bhkw','waerme','strom','haus'],['gaerrest','feld']];
+const STEPV=['futter','fermenter','gas','energie','kreislauf'],STEPCUT=[false,true,true,false,false];
+const TO3=st=>ST3[st]||st;
+const LINKS={feld:[['Mais'],'Mais'],kuh:[['Gülle','Fleckvieh'],'Rind'],hof:[['Waldlerhaus'],'Bauernhof'],silo:[['Silage','Fahrsilo'],'Silage'],annahme:[['Biogasanlage'],'Biogas'],tonne:[['Biotonne'],'Kompost'],
+ fermenter:[['Biogasanlage','Methanogenese'],'Bakterien'],dach:[['Biogas','Methan'],'Methan'],gaerrest:[['Gärrest'],'Dünger'],bhkw:[['Blockheizkraftwerk','Kraft-Wärme-Kopplung'],'Generator'],
+ waerme:[['Wärmeübertrager','Nahwärme'],'Heizung'],strom:[['Stromnetz'],'Elektrischer Strom'],haus:[['Nahwärme'],'Heizung'],aufbereitung:[['Biogasaufbereitung'],'Erdgas']};
+const STEPLINK=[[['Biomasse','Nachwachsender Rohstoff'],'Biomasse'],[['Biogasanlage','Methanogenese'],'Bakterien'],[['Biogas','Methan'],'Methan'],[['Blockheizkraftwerk','Kraft-Wärme-Kopplung'],'Elektrischer Strom'],[['Gärrest','Kohlenstoffkreislauf'],'Dünger']];
+function linkRow(l){if(!l)return'';const[w,k]=l;
+ return `<div class="lex"><span>Mehr erfahren:</span>${w.map(t=>`<a href="https://de.wikipedia.org/w/index.php?search=${encodeURIComponent(t)}&go=Go" target="_blank" rel="noopener"><b>W</b> ${t}</a>`).join('')}${k?`<a class="kx" href="https://klexikon.zum.de/index.php?search=${encodeURIComponent(k)}" target="_blank" rel="noopener"><b>K</b> ${k} <small>(Kinderlexikon)</small></a>`:''}</div>`}
+function figHtml(ph){return ph?`<figure><img src="${ph.src}" alt="${ph.alt}"><figcaption>Foto: ${ph.alt}. ${ph.author}, <a href="${ph.page}" target="_blank" rel="noopener">Wikimedia Commons</a>, ${ph.license}</figcaption></figure>`:`<figure class="nophoto"><div>Für dieses Teil gibt es noch kein Foto.<br>Schau es dir im 3D-Bild genau an.</div></figure>`}
+const short=t=>t.replace(/^(Das|Der|Die) /,'');
+tourShow=function(i,st){
+ tStep=i;tSeen.add(i);const T=TOUR[i];
+ $('#tourSteps').innerHTML=TOUR.map((_,j)=>`<button class="${j===i?'on':''} ${tSeen.has(j)&&j!==i?'done':''}" data-j="${j}" aria-label="Schritt ${j+1}">${j+1}</button>`).join('');
+ const chips=`<div class="tour-parts"><span>Teile in Schritt ${i+1}:</span>${STEPP[i].map(id=>`<button type="button" class="pchip${id===st?' on':''}" data-st="${id}">${short(ST[id][0])}</button>`).join('')}${st?`<button type="button" class="pchip back" data-back="1">← Schritt ${i+1} im Überblick</button>`:''}</div>`;
+ if(!st){
+  $('#tourBody').innerHTML=chips+figHtml(PHOTOS[T.photo])+`<div class="si-text tour-body"><h3>${T.t}</h3><p>${T.p}</p><details class="more"><summary>Genauer hingeschaut</summary><p>${T.x}</p></details>${linkRow(STEPLINK[i])}<p class="hint">Tippe auf ein Teil oben oder im 3D-Bild, um es genauer anzusehen.</p></div>`;
+  if(bio){bio.view(STEPV[i],STEPCUT[i]);bio.mark(STEPP[i].map(TO3))}
+ }else{const d=ST[st];
+  $('#tourBody').innerHTML=chips+figHtml(PHOTOS[st])+`<div class="si-text tour-body"><span class="eyebrow">Schritt ${i+1} · ${short(T.t.replace(/^\d+ · /,''))}</span><h3>${d[0]}</h3><p>${d[1]}</p><details class="more"><summary>Genauer hingeschaut</summary><p>${d[2]}</p></details>${linkRow(LINKS[st])}</div>`;
+  if(bio){if(st==='dach')bio.view('gas',true);else bio.select(TO3(st));bio.mark([TO3(st)])}
+ }
+ $('#tourPrev').disabled=i===0;$('#tourNext').textContent=i===TOUR.length-1?'Station abschließen':'Weiter';$('#stationInfo').hidden=true;
+};
+$('#tourBody').addEventListener('click',e=>{const c=e.target.closest('[data-st]');if(c){tourShow(tStep,c.dataset.st);return}if(e.target.closest('[data-back]'))tourShow(tStep)});
 const VIEW={start:'v-start',rundgang:'v-rundgang',simulator:'v-sim',missionen:'v-sim',wissen:'v-wissen',quiz:'v-quiz',merkheft:'v-merkheft',woerter:'v-woerter',quellen:'v-quellen'};
 const plantBox=document.querySelector('#park .plantbox');
 function route_(){
@@ -1258,14 +1582,14 @@ function route_(){
  route=r;
  Object.values(VIEW).forEach(v=>document.getElementById(v).hidden=true);
  const view=document.getElementById(VIEW[r]);view.hidden=false;
- const slot=view.querySelector('.stage-slot');(slot||document.getElementById('park')).appendChild(plantBox);
+ const slot=view.querySelector('.stage-slot');if(slot)slot.appendChild(bio.el);else bio.el.remove();
  if(r==='simulator'||r==='missionen'){const m=r==='missionen';
   $('#simWhere').textContent=m?'Station 3 · Missionen':'Station 2 · Simulator';
   $('#simLead').innerHTML=m?'<span class="eyebrow">Station 3</span><h2>Missionen am Simulator</h2><p>Die Anlage bleibt immer im Blick. Stell die Regler so ein, dass du die Aufträge schaffst.</p>'
    :'<span class="eyebrow">Station 2</span><h2>Probier es aus: Der Simulator</h2><p>Du bist heute Chefin oder Chef der Biogasanlage. Entscheide, was in den <button class="term" data-t="fermenter">Fermenter</button> kommt und wie warm es dort ist. Schau dabei auf die Anlage.</p>';
   $('#simTask').hidden=m;$('#missionPanel').hidden=!m;
   if(m){airSeen=false;if(!prog.missionen){$('#mais').value=5;$('#guelle').value=20;$('#bio').value=0;$('#temp').value=20;$('#dicht').checked=true}}
-  $('#tags').classList.add('off');calc();}
+  bio.view('sim',true);bio.mark([]);calc();}
  if(r==='rundgang'){$('#tags').classList.toggle('off',$('#tagToggle').getAttribute('aria-pressed')==='false');tourShow(tStep)}
  if(r==='merkheft')complete('merkheft');
  STN.forEach(x=>showFinish(x.id));
